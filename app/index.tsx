@@ -1,5 +1,7 @@
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Dimensions } from 'react-native';
 import { Login } from './components/login';
+
+const { width, height } = Dimensions.get('window');
 
 export default function Page() {
   return (
@@ -14,15 +16,13 @@ export default function Page() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 24,
-    color: 'white',
+    width: width,
+    height: height,
   },
   main: {
     flex: 1,
-    maxWidth: 960,
     alignItems: 'center',
     justifyContent: 'center',
-    marginHorizontal: 'auto',
     backgroundColor: 'black',
   },
 });

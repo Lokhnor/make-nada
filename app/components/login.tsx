@@ -1,45 +1,56 @@
 import { useState } from 'react';
 import { Stack, Link } from 'expo-router';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Spacer } from './Spacer';
 
 export function Login() {
   const [email, onChangeEmail] = useState<string>('example@email.com');
   const [password, onChangePassword] = useState<string>('********');
   return (
-    <>
+    <View style={styles.container}>
       <Stack.Screen options={{ title: 'Login', headerShown: false }} />
-      <View>
-        <Text style={styles.title}>Email</Text>
-        <TextInput style={styles.subtitle} onChangeText={onChangeEmail} value={email} />
-        <Text style={styles.title}>Password</Text>
-        <TextInput style={styles.subtitle} onChangeText={onChangePassword} value={password} />
-      </View>
+      <Spacer />
+      <Text style={styles.title}>Email</Text>
+      <Spacer />
+      <TextInput style={styles.textInput} onChangeText={onChangeEmail} value={email} />
+      <Spacer />
+      <Text style={styles.title}>Password</Text>
+      <Spacer />
+      <TextInput style={styles.textInput} onChangeText={onChangePassword} value={password} />
+      <Spacer inputHeight={20} />
       <Link href={{ pathname: '/details', params: { name: 'Vini' } }} asChild>
         <TouchableOpacity style={styles.button}>
           <Text style={styles.buttonText}>Login</Text>
+          <Spacer />
         </TouchableOpacity>
       </Link>
-    </>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    backgroundColor: '#2f0a66',
+    borderRadius: 24,
+    width: 300,
+    height: 300,
+    alignItems: 'center',
+  },
   title: {
-    alignSelf: 'center',
     color: 'white',
-    backgroundColor: 'blue',
     fontSize: 36,
   },
-  subtitle: {
-    width: 300,
-    alignSelf: 'center',
+  textInput: {
+    width: 260,
+    borderRadius: 24,
+    textAlign: 'center',
     color: 'white',
-    backgroundColor: 'red',
+    backgroundColor: 'grey',
     fontSize: 24,
   },
   button: {
     alignItems: 'center',
-    backgroundColor: '#6366F1',
+    backgroundColor: 'purple',
     borderRadius: 24,
     elevation: 5,
     flexDirection: 'row',
