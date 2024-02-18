@@ -1,23 +1,32 @@
 import { useState } from 'react';
-import { Stack, Link } from 'expo-router';
+import { Stack, useRouter } from 'expo-router';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { Spacer } from './Spacer';
 
 export function Login() {
   const [email, onChangeEmail] = useState<string>('');
   const [password, onChangePassword] = useState<string>('');
+  const router = useRouter();
+
+  function handleLogin() {
+    if (email === 'vini@gmail.com' && password === '12345') {
+      router.navigate({ pathname: '/details' });
+    } else {
+      alert('Incorrect email or password');
+    }
+  }
   return (
     <View style={styles.container}>
       <Stack.Screen options={{ title: 'Login', headerShown: false }} />
       <Text style={styles.title}>NADA</Text>
-      <Spacer inputHeight={50} />
+      <Spacer inputHeight={40} />
       <TextInput
         style={styles.textInput}
         onChangeText={onChangeEmail}
         placeholder="example@example.com"
         value={email}
       />
-      <Spacer inputHeight={30} />
+      <Spacer inputHeight={40} />
       <TextInput
         style={styles.textInput}
         onChangeText={onChangePassword}
@@ -25,11 +34,9 @@ export function Login() {
         value={password}
       />
       <Spacer inputHeight={40} />
-      <Link href={{ pathname: '/details', params: { name: 'Vini' } }} asChild>
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>Login</Text>
-        </TouchableOpacity>
-      </Link>
+      <TouchableOpacity style={styles.button} onPress={handleLogin}>
+        <Text style={styles.buttonText}>Login</Text>
+      </TouchableOpacity>
     </View>
   );
 }
