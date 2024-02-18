@@ -4,24 +4,30 @@ import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-nativ
 import { Spacer } from './Spacer';
 
 export function Login() {
-  const [email, onChangeEmail] = useState<string>('example@email.com');
-  const [password, onChangePassword] = useState<string>('********');
+  const [email, onChangeEmail] = useState<string>('');
+  const [password, onChangePassword] = useState<string>('');
   return (
     <View style={styles.container}>
       <Stack.Screen options={{ title: 'Login', headerShown: false }} />
-      <Spacer />
-      <Text style={styles.title}>Email</Text>
-      <Spacer />
-      <TextInput style={styles.textInput} onChangeText={onChangeEmail} value={email} />
-      <Spacer />
-      <Text style={styles.title}>Password</Text>
-      <Spacer />
-      <TextInput style={styles.textInput} onChangeText={onChangePassword} value={password} />
-      <Spacer inputHeight={20} />
+      <Text style={styles.title}>NADA</Text>
+      <Spacer inputHeight={50} />
+      <TextInput
+        style={styles.textInput}
+        onChangeText={onChangeEmail}
+        placeholder="example@example.com"
+        value={email}
+      />
+      <Spacer inputHeight={30} />
+      <TextInput
+        style={styles.textInput}
+        onChangeText={onChangePassword}
+        placeholder="********"
+        value={password}
+      />
+      <Spacer inputHeight={40} />
       <Link href={{ pathname: '/details', params: { name: 'Vini' } }} asChild>
         <TouchableOpacity style={styles.button}>
           <Text style={styles.buttonText}>Login</Text>
-          <Spacer />
         </TouchableOpacity>
       </Link>
     </View>
@@ -30,23 +36,25 @@ export function Login() {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#2f0a66',
     borderRadius: 24,
     width: 300,
     height: 300,
     alignItems: 'center',
+    justifyContent: 'center',
   },
   title: {
     color: 'white',
-    fontSize: 36,
+    fontSize: 56,
+    fontWeight: 'bold',
   },
   textInput: {
     width: 260,
-    borderRadius: 24,
+    height: 40,
+    borderRadius: 8,
     textAlign: 'center',
-    color: 'white',
-    backgroundColor: 'grey',
-    fontSize: 24,
+    color: 'black',
+    backgroundColor: 'white',
+    fontSize: 22,
   },
   button: {
     alignItems: 'center',
@@ -69,6 +77,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
     textAlign: 'center',
-    width: 200,
+    width: 260,
   },
 });
