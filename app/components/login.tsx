@@ -1,7 +1,16 @@
 import { useState } from 'react';
 import { Stack, useRouter } from 'expo-router';
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { Spacer } from './Spacer';
+import {
+  Dimensions,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+  Image,
+} from 'react-native';
+
+const { width, height } = Dimensions.get('window');
 
 export function Login() {
   const [email, onChangeEmail] = useState<string>('');
@@ -18,22 +27,20 @@ export function Login() {
   return (
     <View style={styles.container}>
       <Stack.Screen options={{ title: 'Login', headerShown: false }} />
-      <Text style={styles.title}>NADA</Text>
-      <Spacer inputHeight={40} />
+      {/* <Text style={styles.title}>NADA</Text> */}
+      <Image source={require('../../assets/NadaLogo.png')} />
       <TextInput
         style={styles.textInput}
         onChangeText={onChangeEmail}
         placeholder="example@example.com"
         value={email}
       />
-      <Spacer inputHeight={40} />
       <TextInput
         style={styles.textInput}
         onChangeText={onChangePassword}
         placeholder="********"
         value={password}
       />
-      <Spacer inputHeight={40} />
       <TouchableOpacity style={styles.button} onPress={handleLogin}>
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
@@ -43,47 +50,37 @@ export function Login() {
 
 const styles = StyleSheet.create({
   container: {
-    borderRadius: 24,
-    width: 300,
-    height: 300,
+    width: width * 0.8,
+    height: height * 0.55,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
   },
   title: {
     color: 'white',
-    fontSize: 56,
+    fontSize: height * 0.06,
     fontWeight: 'bold',
   },
   textInput: {
-    width: 260,
-    height: 40,
-    borderRadius: 8,
+    width: '100%',
+    height: height * 0.07,
+    borderRadius: height * 0.04,
     textAlign: 'center',
     color: 'black',
     backgroundColor: 'white',
-    fontSize: 22,
+    fontSize: height * 0.03,
   },
   button: {
     alignItems: 'center',
     backgroundColor: 'purple',
-    borderRadius: 24,
-    elevation: 5,
+    height: height * 0.07,
+    borderRadius: height * 0.04,
     flexDirection: 'row',
-    justifyContent: 'center',
-    padding: 16,
-    shadowColor: '#000',
-    shadowOffset: {
-      height: 2,
-      width: 0,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
   },
   buttonText: {
+    fontSize: height * 0.03,
     color: '#FFFFFF',
-    fontSize: 16,
     fontWeight: '600',
     textAlign: 'center',
-    width: 260,
+    width: '100%',
   },
 });
