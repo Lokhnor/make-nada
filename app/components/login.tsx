@@ -1,16 +1,7 @@
-import React, { useEffect, useRef } from 'react';
-import { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Stack, useRouter } from 'expo-router';
-import {
-  Dimensions,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-  Image,
-  Animated,
-} from 'react-native';
+import { Dimensions, StyleSheet, TextInput, View, Image, Animated } from 'react-native';
+import { Button } from './Button';
 
 const { width, height } = Dimensions.get('window');
 
@@ -65,22 +56,6 @@ export function Login() {
     ).start();
   }, []);
 
-  const scaleValue = useRef(new Animated.Value(1)).current;
-
-  const buttonScale = () => {
-    Animated.timing(scaleValue, {
-      toValue: 0.95,
-      duration: 100,
-      useNativeDriver: true,
-    }).start(() => {
-      Animated.timing(scaleValue, {
-        toValue: 1,
-        duration: 100,
-        useNativeDriver: true,
-      }).start();
-    });
-  };
-
   return (
     <View style={styles.container}>
       <Stack.Screen options={{ title: 'Login', headerShown: false }} />
@@ -103,16 +78,7 @@ export function Login() {
         placeholder="********"
         value={password}
       />
-      <Animated.View style={{ transform: [{ scale: scaleValue }] }}>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => {
-            handleLogin();
-            buttonScale();
-          }}>
-          <Text style={styles.buttonText}>Login</Text>
-        </TouchableOpacity>
-      </Animated.View>
+      <Button onPress={handleLogin} title={'Login'}></Button>
     </View>
   );
 }
@@ -137,20 +103,6 @@ const styles = StyleSheet.create({
     color: 'black',
     backgroundColor: 'white',
     fontSize: height * 0.03,
-  },
-  button: {
-    alignItems: 'center',
-    backgroundColor: 'purple',
-    height: height * 0.07,
-    borderRadius: height * 0.04,
-    flexDirection: 'row',
-  },
-  buttonText: {
-    fontSize: height * 0.03,
-    color: '#FFFFFF',
-    fontWeight: '600',
-    textAlign: 'center',
-    width: '100%',
   },
   image: {
     width: 30,
