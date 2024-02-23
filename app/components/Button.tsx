@@ -1,7 +1,5 @@
 import { useRef } from 'react';
-import { Animated, TouchableOpacity, Text, Dimensions, StyleSheet } from 'react-native';
-
-const { height } = Dimensions.get('window');
+import { Animated, TouchableOpacity, Text, StyleSheet } from 'react-native';
 
 export function Button({ onPress, title }: { onPress?: any; title: any }) {
   const scaleValue = useRef(new Animated.Value(1)).current;
@@ -38,12 +36,12 @@ const styles = StyleSheet.create({
   button: {
     alignItems: 'center',
     backgroundColor: 'purple',
-    height: height * 0.07,
-    borderRadius: height * 0.04,
+    height: 54,
+    borderRadius: 30,
     flexDirection: 'row',
   },
   buttonText: {
-    fontSize: height * 0.03,
+    fontSize: 22,
     color: '#FFFFFF',
     fontWeight: '600',
     textAlign: 'center',

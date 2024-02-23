@@ -1,9 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Stack, useRouter } from 'expo-router';
-import { Dimensions, StyleSheet, TextInput, View, Image, Animated } from 'react-native';
+import { StyleSheet, TextInput, View, Image, Animated } from 'react-native';
 import { Button } from './Button';
-
-const { width, height } = Dimensions.get('window');
 
 export function Login() {
   const [email, onChangeEmail] = useState<string>('');
@@ -85,24 +83,19 @@ export function Login() {
 
 const styles = StyleSheet.create({
   container: {
-    width: width * 0.8,
-    height: height * 0.55,
+    width: 300,
+    height: 420,
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  title: {
-    color: 'white',
-    fontSize: height * 0.06,
-    fontWeight: 'bold',
-  },
   textInput: {
     width: '100%',
-    height: height * 0.07,
-    borderRadius: height * 0.04,
+    height: 54,
+    borderRadius: 30,
     textAlign: 'center',
     color: 'black',
     backgroundColor: 'white',
-    fontSize: height * 0.03,
+    fontSize: 22,
   },
   image: {
     width: 30,
