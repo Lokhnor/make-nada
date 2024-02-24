@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { Button } from './components/Button';
 import { useEffect, useState } from 'react';
 
-export default function Details() {
+export default function GameScreen() {
   const [isTimerRunning, setIsTimerRunning] = useState<boolean>(false);
   const [timer, setTimer] = useState(0);
   const [lastScore, setLastScore] = useState(0);
@@ -32,7 +32,7 @@ export default function Details() {
 
   return (
     <View style={styles.container}>
-      <Stack.Screen options={{ title: 'Details', headerShown: false }} />
+      <Stack.Screen options={{ title: 'Game', headerShown: false }} />
       <View style={styles.main}>
         <Text style={styles.score}>Previous score: {lastScore}</Text>
         {!isTimerRunning && (

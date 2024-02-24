@@ -9,8 +9,8 @@ export function Login() {
   const router = useRouter();
 
   function handleLogin() {
-    if (email === 'vini@gmail.com' && password === '12345') {
-      router.navigate({ pathname: '/details' });
+    if (email === 'vi' && password === '11') {
+      router.navigate({ pathname: '/game' });
     } else {
       alert('Incorrect email or password');
     }
@@ -74,6 +74,7 @@ export function Login() {
         style={styles.textInput}
         onChangeText={onChangePassword}
         placeholder="********"
+        secureTextEntry={true}
         value={password}
       />
       <Button onPress={handleLogin} title={'Login'}></Button>
