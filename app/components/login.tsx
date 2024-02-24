@@ -10,7 +10,7 @@ export function Login() {
 
   function handleLogin() {
     if (email === 'vi' && password === '11') {
-      router.navigate({ pathname: '/game' });
+      router.navigate({ pathname: '/gameScreen' });
     } else {
       alert('Incorrect email or password');
     }

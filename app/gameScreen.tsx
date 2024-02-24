@@ -2,11 +2,21 @@ import { Stack } from 'expo-router';
 import { StyleSheet, Text, View } from 'react-native';
 import { Button } from './components/Button';
 import { useEffect, useState } from 'react';
+import { getRandomPosition } from '~/utils/randomPosition';
+
+type Circle = {
+  id: string;
+  position: {
+    top: number;
+    left: number;
+  };
+};
 
 export default function GameScreen() {
   const [isTimerRunning, setIsTimerRunning] = useState<boolean>(false);
   const [timer, setTimer] = useState(0);
   const [lastScore, setLastScore] = useState(0);
+  const [circles, setCircles] = useState<Circle[]>([]);
 
   function startTimer() {
     setIsTimerRunning(true);
@@ -16,13 +26,28 @@ export default function GameScreen() {
     setIsTimerRunning(false);
     setLastScore(timer);
     setTimer(0);
+    setCircles([]);
   }
 
   useEffect(() => {
     let interval: any = null;
     if (isTimerRunning) {
       interval = setInterval(() => {
-        setTimer((prevTimer) => prevTimer + 1);
+        setTimer((prevTimer) => {
+          if (prevTimer === 5) {
+            setCircles((prevCircles) => [
+              ...prevCircles,
+              { id: Math.random().toString(36).substr(2, 9), position: getRandomPosition() },
+            ]);
+          }
+          if (prevTimer % 5 === 0 && prevTimer !== 0) {
+            setCircles((prevCircles) => [
+              ...prevCircles,
+              { id: Math.random().toString(36).substr(2, 9), position: getRandomPosition() },
+            ]);
+          }
+          return prevTimer + 1;
+        });
       }, 1000);
     } else if (!isTimerRunning && timer !== 0) {
       clearInterval(interval);
@@ -46,6 +71,12 @@ export default function GameScreen() {
             <Text style={styles.timer}>{timer}</Text>
           </>
         )}
+        {circles.map((circle: Circle) => (
+          <View
+            key={circle.id}
+            style={[styles.mob, { top: circle.position.top, left: circle.position.left }]}
+          />
+        ))}
       </View>
     </View>
   );
@@ -72,5 +103,12 @@ const styles = StyleSheet.create({
     fontSize: 48,
     fontWeight: 'bold',
     color: 'white',
+  },
+  mob: {
+    position: 'absolute',
+    width: 50,
+    height: 50,
+    borderRadius: 26,
+    backgroundColor: 'red',
   },
 });
