@@ -1,11 +1,13 @@
 import { StyleSheet, View } from 'react-native';
 import { Login } from './components/Login';
+import GameScreen from './gameScreen';
 
 export default function Page() {
   return (
     <View style={styles.container}>
       <View style={styles.main}>
-        <Login />
+        {/* <Login /> */}
+        <GameScreen />
       </View>
     </View>
   );
