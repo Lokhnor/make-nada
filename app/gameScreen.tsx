@@ -1,8 +1,10 @@
 import { Stack } from 'expo-router';
-import { StyleSheet, Text, View } from 'react-native';
+import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import { Button } from './components/Button';
-import { useEffect, useState } from 'react';
-import { getRandomPosition } from '~/utils/randomPosition';
+import { useCallback, useState } from 'react';
+import Animated, { useSharedValue, withSpring } from 'react-native-reanimated';
+
+const { height, width } = Dimensions.get('window');
 
 type Circle = {
   id: string;
@@ -16,67 +18,34 @@ export default function GameScreen() {
   const [isTimerRunning, setIsTimerRunning] = useState<boolean>(false);
   const [timer, setTimer] = useState(0);
   const [lastScore, setLastScore] = useState(0);
-  const [circles, setCircles] = useState<Circle[]>([]);
+  const translateY = useSharedValue(0);
 
-  function startTimer() {
+  const startTimer = useCallback(() => {
     setIsTimerRunning(true);
-  }
+    translateY.value = withSpring(translateY.value + height / 2);
+  }, []);
 
-  function stopTimer() {
+  const stopTimer = useCallback(() => {
     setIsTimerRunning(false);
     setLastScore(timer);
+    translateY.value = withSpring(translateY.value - height / 2);
     setTimer(0);
-    setCircles([]);
-  }
-
-  useEffect(() => {
-    let interval: any = null;
-    if (isTimerRunning) {
-      interval = setInterval(() => {
-        setTimer((prevTimer) => {
-          if (prevTimer === 5) {
-            setCircles((prevCircles) => [
-              ...prevCircles,
-              { id: Math.random().toString(36).substr(2, 9), position: getRandomPosition() },
-            ]);
-          }
-          if (prevTimer % 5 === 0 && prevTimer !== 0) {
-            setCircles((prevCircles) => [
-              ...prevCircles,
-              { id: Math.random().toString(36).substr(2, 9), position: getRandomPosition() },
-            ]);
-          }
-          return prevTimer + 1;
-        });
-      }, 1000);
-    } else if (!isTimerRunning && timer !== 0) {
-      clearInterval(interval);
-    }
-    return () => clearInterval(interval);
-  }, [isTimerRunning, timer]);
+  }, [timer]);
 
   return (
     <View style={styles.container}>
       <Stack.Screen options={{ title: 'Game', headerShown: false }} />
       <View style={styles.main}>
         <Text style={styles.score}>Previous score: {lastScore}</Text>
-        {!isTimerRunning && (
+        {!isTimerRunning ? (
+          <Button title={'Start'} onPress={startTimer} />
+        ) : (
           <>
-            <Button title={'Start'} onPress={startTimer}></Button>
+            <Button title={'Stop'} onPress={stopTimer} />
+            {/* <Text style={styles.timer}>{timer}</Text> */}
           </>
         )}
-        {isTimerRunning && (
-          <>
-            <Button title={'Stop'} onPress={stopTimer}></Button>
-            <Text style={styles.timer}>{timer}</Text>
-          </>
-        )}
-        {circles.map((circle: Circle) => (
-          <View
-            key={circle.id}
-            style={[styles.mob, { top: circle.position.top, left: circle.position.left }]}
-          />
-        ))}
+        <Animated.View style={[styles.mob, { transform: [{ translateY }] }]} />
       </View>
     </View>
   );
@@ -105,9 +74,10 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   mob: {
+    zIndex: -1,
     position: 'absolute',
-    width: 50,
-    height: 50,
+    width: 40,
+    height: 40,
     borderRadius: 26,
     backgroundColor: 'red',
   },
